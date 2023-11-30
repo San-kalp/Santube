@@ -1,8 +1,9 @@
 //Entry point for out project 
 import express from "express";
 import Ffmpeg from "fluent-ffmpeg";
+import {setupDirectories} from "./storage";
 
-
+setupDirectories();
 
 const app = express();
 app.use(express.json());
@@ -19,17 +20,6 @@ app.post("/process-video",(req,res) =>{
     if (!outputFilePath){
         res.status(400).send("Missing output file path");
     }
-
-    Ffmpeg(inputFilePath)
-        .outputOptions("-vf","scale= -1:360")//Converting to 360P
-        .on("end",()=>{
-            res.status(200).send("Video processing finished successfully")
-        })
-        .on("error",(err) =>{
-            console.log(`An error occured: ${err.message}`);
-            res.status(500).send(`Internal Server Error :${err.message}`);
-        })
-        .save(outputFilePath);
 });
 
 const port = process.env.PORT || 3000;
