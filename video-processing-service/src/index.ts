@@ -1,6 +1,6 @@
 //Entry point for out project 
 import express from "express";
-import {setupDirectories,downloadRawVideo,uploadProcessVideo,convertVideo, deleteProcessedVideo, deleteRawVideo} from "./storage";
+import {setupDirectories,downloadRawVideo,uploadProcessedVideo,convertVideo, deleteProcessedVideo, deleteRawVideo} from "./storage";
 
 setupDirectories();
 
@@ -42,7 +42,7 @@ app.post("/process-video",async (req,res) =>{
     }
 
     //Upload the processes video to cloud storage 
-    await uploadProcessVideo(outputFileName);
+    await uploadProcessedVideo(outputFileName);
 
     //Delete after uploading
     await Promise.all([
